@@ -14,16 +14,32 @@ public class Kata5 {
 	static String url = "jdbc:sqlite:KATA5.db";
 	
 	public static void main(String[] args) {
-		createNewDatabase("KATA5.db");
-		createNewTable();
+//		createNewDatabase("KATA5.db");
+//		createNewTable();
+//		
+//		Kata5 idt = new Kata5();
+//		// Se insertar 3 nuevas líneas
+//		idt.insert("Yusra","Boutahar","DIS");
+//		idt.insert("Pedro","Almodobar","PSOE");
+//		idt.insert("Hasan","Boutahar","GUI");
+//		
+//		idt.selectAll();
 		
-		Kata5 idt = new Kata5();
-		// Se insertar 3 nuevas líneas
-		idt.insert("Yusra","Boutahar","DIS");
-		idt.insert("Pedro","Almodobar","PSOE");
-		idt.insert("Hasan","Boutahar","GUI");
+		// Instrucción SQL para crear  tabla EMAIL
+		String sql = "CREATE TABLE IF NOT EXISTS EMAIL (\n"
+						+ " id integer PRIMARY KEY AUTOINCREMENT,\n"
+							+ " Mail text NOT NULL);";
 		
-		idt.selectAll();
+		try (Connection conn = DriverManager.getConnection(url);
+				Statement stmt = conn.createStatement()) {
+			// Se crea la nueva tabla
+			stmt.execute(sql);
+			System.out.println("Tabla creada");
+		
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
 	}
 	
 	public static void createNewDatabase(String filename) {

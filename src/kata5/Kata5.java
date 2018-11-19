@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 
 public class Kata5 {
@@ -25,6 +26,7 @@ public class Kata5 {
 //		
 //		idt.selectAll();
 		
+		// Kata5P1: versión 2, crear tabla "EMAIL"
 		// Instrucción SQL para crear  tabla EMAIL
 		String sql = "CREATE TABLE IF NOT EXISTS EMAIL (\n"
 						+ " id integer PRIMARY KEY AUTOINCREMENT,\n"
@@ -39,6 +41,30 @@ public class Kata5 {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+		
+		
+		// Kata5P1 versión 3:
+		String dirEmails = "src/File/emailsfile.txt";
+		List<String> lista = MailListReader.read(dirEmails);
+		
+		String sql1 = "INSERT INTO EMAIL(Mail) VALUES(?)";
+		
+		try (Connection conn = DriverManager.getConnection(url);
+		PreparedStatement pstmt = conn.prepareStatement(sql1)) {
+			
+			for(String s1: lista) {
+				pstmt.setString(1, s1);
+				pstmt.executeUpdate();	
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		
+		
+		
+		
+		
 		
 	}
 	
